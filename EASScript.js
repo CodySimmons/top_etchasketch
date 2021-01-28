@@ -1,14 +1,10 @@
 //Initial global
-var grid = 16;
 var black = true;
 var rainbow = false;
 
 //page elements
 const gridContainer = document.querySelector("#grid-container");
-const resetButton = document.querySelector(".reset-button");
-// const blackButton = document.querySelector(".black-button");
-// const rainbowButton = document.querySelector(".rainbow-button");
-const colorButtons = document.querySelectorAll(".color-buttons");
+const pageButtons = document.querySelectorAll("button");
 
 function gridConstructor(gridMax) {
   let gridArea = gridMax ** 2;
@@ -27,7 +23,6 @@ function gridConstructor(gridMax) {
 }
 
 function cellChangeColor() {
-  console.log("Hello");
   if (black) {
     this.style.backgroundColor = "black";
   } else {
@@ -38,19 +33,47 @@ function cellChangeColor() {
   }
 }
 
-function blackButtonPress() {}
+function colorClear() {
+  var gridAllCells = gridContainer.querySelectorAll("div");
+  gridAllCells.forEach(
+    (gridCell) => (gridCell.style.backgroundColor = "white")
+  );
+}
 
-function rainbowButtonPress() {}
+function gridSizeChange() {
+  let newSize = prompt("Please enter a new grid size:", "1-100");
+  while (true) {
+    if (newSize < 1 || newSize > 100) {
+      newSize = prompt("Please enter a valid grid size:", "1-100");
+    } else {
+      break;
+    }
+  }
+  colorClear();
+  gridConstructor(newSize);
+}
 
-gridConstructor(grid);
-colorButtons.forEach((btn) => {
+//buttons
+pageButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    if (btn.classList.contains("black-button")) {
-      black = true;
-      rainbow = false;
-    } else if (btn.classList.contains("rainbow-button")) {
-      black = false;
-      rainbow = true;
+    switch (true) {
+      case btn.classList.contains("black-button"):
+        black = true;
+        rainbow = false;
+        break;
+      case btn.classList.contains("rainbow-button"):
+        black = false;
+        rainbow = true;
+        break;
+      case btn.classList.contains("reset-button"):
+        colorClear();
+        break;
+      case btn.classList.contains("grid-size"):
+        gridSizeChange();
+        break;
     }
   });
 });
+
+//initial default setup
+gridConstructor(16);
