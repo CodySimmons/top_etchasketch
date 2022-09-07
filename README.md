@@ -13,7 +13,7 @@ What I learned:
 gridAllCells.forEach((gridCell) =>
 gridCell.addEventListener("mouseover", cellChangeColor)
 );
-This bit is calling the fuction without the () passes the function's script through,
+This bit is calling the function without the () passes the function's script through,
 allowing the script to run, using the 'this' in the function to apply to the gridCell.
 
 A better understanding of 'this' and => in general
